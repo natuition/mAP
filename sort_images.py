@@ -5,7 +5,7 @@ This script loads images list txt file and copy listed images from dataset into 
 import shutil
 import glob
 
-LIST_FILE_PATH = "input/other/images_list_d1.txt"  # txt list of images which will be copied to input dir and used
+LIST_FILE_PATH = "other/images_list_d1.txt"  # txt list of images which will be copied to input dir and used
 COPY_FROM_PATH = "input/dataset2/"  # dir to copy images from
 COPY_TO_PATH = "input/images-optional/"  # dir where images will be copied to, and used by mAP test tools later
 

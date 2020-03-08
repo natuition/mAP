@@ -14,7 +14,7 @@ pottedplant 272 190 316 259
 import json
 import glob
 
-INPUT_JSON_PATH = "input/other/copy.json"  # json file to parse with images markup data
+INPUT_JSON_PATH = "other/copy.json"  # json file to parse with images markup data
 INPUT_IMAGES_PATH = "input/images-optional/"  # for this images script will seek data in json
 OUTPUT_TXT_PATH = "input/ground-truth/"  # and save here txt files with converted markup areas required for mAP tools
 CM = 0.75  # conversion multiplier - this is for reducing rect area when circle is converted to rect
