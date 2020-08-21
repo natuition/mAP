@@ -1,14 +1,14 @@
 """
-This script loads images list txt file and copy listed images from dataset into rest scripts input dir
+This script loads images list json file and copy listed images from dataset into rest scripts input dir
 """
 
 import json
 import shutil
 import glob
 
-JSON_FILE_PATH = "input/dataset3/1.json"  # json file with images annotations which will be used as list of images to copy
-COPY_FROM_PATH = "input/dataset3/"  # dir to copy images from
-COPY_TO_PATH = "input/dataset3-result/"  # dir where images will be copied to, and used by mAP test tools later
+JSON_FILE_PATH = "input/dataset3/Natuition_dataset4_v1.json"  # json file with images annotations which will be used as list of images to copy
+COPY_FROM_PATH = "input/dataset3/"  # dir where images are copied from
+COPY_TO_PATH = "input/dataset3-result/"  # dir where images will be copied to
 
 
 def main():
@@ -19,15 +19,15 @@ def main():
         for key in data:
             files_to_copy.append(data[key]["filename"])
 
-    i = 0
+    copied = 0
     all_images_paths = glob.glob(COPY_FROM_PATH + "*.jpg")
     for image_path in all_images_paths:
         file_name = image_path.split('\\')[-1]
         if file_name in files_to_copy:
             shutil.copyfile(image_path, COPY_TO_PATH + file_name)
-            i += 1
+            copied += 1
 
-    print("Copied", i, "files.")
+    print("Copied", copied, "files.")
 
 
 if __name__ == '__main__':
