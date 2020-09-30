@@ -8,9 +8,10 @@ import glob
 import platform
 import os
 
-JSON_FILE_PATH = "input/dataset3/Natuition_dataset4_v1.json"  # json file with images annotations which will be used as list of images to copy
-COPY_FROM_PATH = "input/dataset3/"  # dir where images are copied from
-COPY_TO_PATH = "input/dataset3-result/"  # dir where images will be copied to
+JSON_FILE_PATH = "input/dataset5 raw 1 sorted/dataset5_v23.json"  # json file with images annotations which will be used as list of images to copy
+COPY_FROM_PATH = "input/dataset5 raw 1 sorted/"  # dir where images are copied from
+COPY_TO_PATH = "input/dataset5 raw 1 sorted filtered/"  # dir where images will be copied to
+EXCLUDED_IMAGES_LIST = "input/dataset5 raw 1 sorted filtered/excluded images list.txt"
 
 
 def get_slash():
@@ -33,7 +34,8 @@ def create_directories(*args):
 
 
 def main():
-    create_directories(JSON_FILE_PATH, COPY_FROM_PATH, COPY_TO_PATH)
+    create_directories(COPY_TO_PATH)
+    excluded_images_names = set()
 
     # extract list of file paths to copy
     with open(JSON_FILE_PATH, "r") as file:
@@ -49,8 +51,21 @@ def main():
         if file_name in files_to_copy:
             shutil.copyfile(image_path, COPY_TO_PATH + file_name)
             copied += 1
+        else:
+            excluded_images_names.add(file_name)
 
-    print("Copied", copied, "files.")
+    # save excluded images list
+    if len(excluded_images_names) > 0:
+        with open(EXCLUDED_IMAGES_LIST, "w") as file:
+            file.write("These files were excluded (they are not present in given json):\n")
+            for item in excluded_images_names:
+                file.write(item + "\n")
+
+    print("Found", len(all_images_paths), "images")
+    print("Copied", copied, "images.")
+    if len(excluded_images_names) > 0:
+        print("Excluded", len(excluded_images_names), "images (not in the given json). See details in", EXCLUDED_IMAGES_LIST, "file.")
+    print("Done.")
 
 
 if __name__ == '__main__':
